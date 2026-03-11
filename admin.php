@@ -24,8 +24,15 @@ if (isset($_POST['adi'], $_POST['soyadi'], $_POST['eposta'])) {
         $sorgu->bindParam(2, $soyadi, PDO::PARAM_STR);
         $sorgu->bindParam(3, $eposta, PDO::PARAM_STR);
 
+        $sorgu1 = $baglanti->prepare("UPDATE setting SET name = ?, surname = ?, email = ? WHERE id = 2");
+        $sorgu1->bindParam(1, $adi, PDO::PARAM_STR);
+        $sorgu1->bindParam(2, $soyadi, PDO::PARAM_STR);
+        $sorgu1->bindParam(3, $eposta, PDO::PARAM_STR);
+
 echo $adi;
         $sorgu->execute();
+
+        $sorgu1->execute();
 
         echo "<p>Bilgiler başarılı bir şekilde kaydedildi.</p>";
 

@@ -1,3 +1,34 @@
+<?php
+
+$sira1 = 1;
+
+try {
+
+    $baglanti = new PDO("mysql:host=localhost;dbname=cansu", "root", "");
+    $baglanti->exec("SET NAMES utf8");
+    $baglanti->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sorgu1 = $baglanti->prepare("SELECT * FROM setting WHERE id = ?");
+    $sorgu1->bindParam(1, $sira1, PDO::PARAM_INT);
+    $sorgu1->execute();
+
+    $cikti1 = $sorgu1->fetch(PDO::FETCH_ASSOC);
+
+    $sorgu2 = $baglanti->prepare("SELECT * FROM posts WHERE id = ?");
+    $sorgu2->bindParam(1, $sira1, PDO::PARAM_INT);
+    $sorgu2->execute();
+
+    $cikti2 = $sorgu2->fetch(PDO::FETCH_ASSOC);
+
+    #echo "Adı: " . $cikti1["name"] . "<br /> Soyadı: " . $cikti1["surname"] . "<br /> E-posta: " . $cikti1["email"] . "<br /> Deneyim: " . $cikti1["experience_year"] ." Yıl";
+
+} catch (PDOException $e) {
+    die($e->getMessage());
+}
+
+$baglanti = null;
+
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
@@ -117,18 +148,17 @@
                         <div class="col-lg-8">
                             <div class="bsingle__post mb-50">
                                 <div class="bsingle__post-thumb">
-                                    <img src="img/blog/inner_b1.jpg" alt="">
+                                    <img src="<?php echo $cikti2["web_image"]; ?>" alt="">
                                 </div>
                                 <div class="bsingle__content">
                                     <div class="meta-info">
                                         <ul>
-                                            <li><i class="fal fa-user"></i>By Zcube</li>
-                                            <li><i class="fal fa-calendar-alt"></i>  24th March 2023</li>
+                                            <li><i class="fal fa-user"></i>By <?php echo $cikti1["name"]; ?></li>
+                                            <li><i class="fal fa-calendar-alt"></i>  <?php echo $cikti1["tarih"]; ?></li>
                                         </ul>
                                     </div>
-                                    <h2><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur
-                                            cing elit, sed do eiusmod tempor.</a></h2>
-                                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+                                    <h2><a href="blog-details.html"> </a><?php echo $cikti2["title"]; ?></h2>
+                                   <p><?php echo $cikti2["content"]; ?></p>
                                     <div class="blog__btn">
                                         <a href="#" class="btn">Read More</a>
                                     </div>
@@ -136,77 +166,18 @@
                             </div>
                             <div class="bsingle__post mb-50">
                                 <div class="bsingle__post-thumb video-p">
-                                    <img src="img/blog/inner_b2.jpg" alt="">
-                                    <a href="https://www.youtube.com/watch?v=vKSA_idPZkc" class="video-i popup-video"><i class="fas fa-play"></i></a>
+                                    <img src="<?php echo $cikti2["web_video_kapak"]; ?>" alt="">
+                                    <a href="<?php echo $cikti2["web_video"]; ?>" class="video-i popup-video"><i class="fas fa-play"></i></a>
                                 </div>
                                 <div class="bsingle__content">
                                     <div class="meta-info">
                                         <ul>
-                                            <li><i class="fal fa-user"></i>By Zcube</li>
+                                            <li><i class="fal fa-user"></i>By <?php echo $cikti1["name"]; ?></li>
                                             <li><i class="far fa-comments"></i>35 Comments</li>
                                         </ul>
                                     </div>
-                                    <h2><a href="blog-details.html">There are many variations passages of like consectetur lorem ipsum available.</a></h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
-                                    <div class="blog__btn">
-                                        <a href="#" class="btn">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bsingle__post mb-50">
-                                <div class="bsingle__post-thumb blog-active">
-                                    <div class="slide-post">
-                                        <img src="img/blog/inner_b3.jpg" alt="">
-                                    </div>
-                                    <div class="slide-post">
-                                        <img src="img/blog/inner_b2.jpg" alt="">
-                                    </div>
-                                    <div class="slide-post">
-                                        <img src="img/blog/inner_b1.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="bsingle__content">
-                                    <div class="meta-info">
-                                        <ul>
-                                            <li><i class="fal fa-user"></i>By Zcube</li>
-                                            <li><i class="fal fa-calendar-alt"></i>  24th March 2023</li>
-                                        </ul>
-                                    </div>
-                                    <h2><a href="blog-details.html">I must explain to you how all this mistaken idea of denouncing pleasure.</a></h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
-                                    <div class="blog__btn">
-                                        <a href="#" class="btn">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bsingle__post mb-50">
-                                <div class="bsingle__post-thumb embed-responsive embed-responsive-16by9">
-                                    <iframe height="300" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/547295505&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-                                </div>
-                                <div class="bsingle__content">
-                                    <div class="meta-info">
-                                        <ul>
-                                            <li><i class="fal fa-user"></i>By Zcube</li>
-                                            <li><i class="fal fa-calendar-alt"></i>  24th March 2023</li>
-                                        </ul>
-                                    </div>
-                                    <h2><a href="blog-details.html">There are many variations passages of like consectetur lorem ipsum available.</a></h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
-                                    <div class="blog__btn">
-                                        <a href="#" class="btn">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bsingle__post mb-50">
-                                <div class="bsingle__content">
-                                    <div class="meta-info">
-                                        <ul>
-                                            <li><i class="fal fa-user"></i>By Zcube</li>
-                                            <li><i class="fal fa-calendar-alt"></i>  24th March 2023</li>
-                                        </ul>
-                                    </div>
-                                    <h2><a href="blog-details.html">On the other hand, we denounce with of righteous indignation and dislike men.</a></h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+                                    <h2><a href="blog-details.html"><?php echo $cikti2["title"]; ?></a></h2>
+                                    <p><?php echo $cikti2["content"]; ?></p>
                                     <div class="blog__btn">
                                         <a href="#" class="btn">Read More</a>
                                     </div>

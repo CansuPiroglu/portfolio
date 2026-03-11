@@ -13,8 +13,14 @@ try {
     $sorgu->execute();
 
     $cikti = $sorgu->fetch(PDO::FETCH_ASSOC);
+   
+    $hizmet_sorgu = $baglanti->query("SELECT * FROM services");
+    $hizmet = $hizmet_sorgu->fetchAll(PDO::FETCH_ASSOC);
+    
+
 
     #echo "Adı: " . $cikti["name"] . "<br /> Soyadı: " . $cikti["surname"] . "<br /> E-posta: " . $cikti["email"] . "<br /> Deneyim: " . $cikti["experience_year"] ." Yıl";
+
 
 } catch (PDOException $e) {
     die($e->getMessage());
@@ -120,8 +126,8 @@ $baglanti = null;
                               
                                 <div class="col-lg-7 col-md-7">
                                     <div class="slider-content s-slider-content mt-100 p-relative">
-                                        <h5 data-animation="fadeInUp" data-delay=".3s"><span><img src="img/bg/cube.png" alt="icon01"></span> creative designer</h5>
-                                         <h2 data-animation="fadeInUp" data-delay=".6s">Selam Ben <?php echo $cikti["name"]; ?></h2>
+                                        <h5 data-animation="fadeInUp" data-delay=".3s"><span><img src="img/bg/cube.png" alt="icon01"></span> <?php echo $cikti["title"]; ?></h5>
+                                         <h2 data-animation="fadeInUp" data-delay=".6s">Selam Ben <br><?php echo $cikti["name"]; ?></h2>
                                           <div class="slider-btn mb-105">     
                                             <a href="#contact" class="btn ss-btn mr-15" data-animation="fadeInUp" data-delay=".9s">Download CV </a>
                                         </div>        
@@ -129,7 +135,7 @@ $baglanti = null;
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-md-5 p-relative">
-                                   <div class="img-main" data-animation="fadeInRight" data-delay=".3s"> <img src="img/slider/main.png" alt="slider-overlay"></div>
+                                   <div class="img-main" data-animation="fadeInRight" data-delay=".3s"> <img src="<?php echo $cikti["profile_image"]; ?>" alt="slider-overlay"></div>
                                 </div>
                                 
                             </div>
@@ -143,16 +149,17 @@ $baglanti = null;
              <!-- services-three-area -->
             <section id="services" class="services-area services-bg  p-relative fix pt-120 pb-90" style="background:#1a1d88; ">
                 <div class="container">
-                    <div class="row">
                         
-                              <div class="col-lg-4 col-md-6">
+
+                    <div class="row">                        
+                            <div class="col-lg-4 col-md-6">
                                  <div class="s-single-services text-center mb-30 wow fadeInUp  animated" data-animation="fadeInUp" data-delay=".2s">
                                     <div class="services-icon mb-30">
-                                     <img src="img/icon/se-icon1.png" alt="img">
+                                     <img src="<?php echo $hizmet[0]["ikon"]; ?>" alt="img">
                                     </div>
                                     <div class="second-services-content">
-                                        <h3><a href="single-service.html">Product Design</a></h3>
-                                        <p>I research & create breakthrough delightful ideas leading.</p>
+                                        <h3><a href="single-service.html"><?php echo $hizmet[0]["baslik"]; ?></a></h3>
+                                        <p><?php echo $hizmet[0]["icerik"]; ?></p>
                                         <a href="single-service.html" class="readmore">Read More</a>
                                     </div>
                                 </div>
@@ -160,11 +167,11 @@ $baglanti = null;
                                <div class="col-lg-4 col-md-6">
                                <div class="s-single-services text-center active mb-30 wow fadeInUp  animated" data-animation="fadeInUp" data-delay=".4s">
                                     <div class="services-icon mb-30">
-                                     <img src="img/icon/se-icon2.png" alt="img">
+                                     <img src="<?php echo $hizmet[1]["ikon"]; ?>" alt="img">
                                     </div>
                                     <div class="second-services-content">
-                                       <h3><a href="single-service.html">Website Design</a></h3>
-                                        <p>I research & create breakthrough delightful ideas leading.</p>
+                                       <h3><a href="single-service.html"><?php echo $hizmet[1]["baslik"]; ?></a></h3>
+                                        <p><?php echo $hizmet[1]["icerik"]; ?></p>
                                         <a href="single-service.html" class="readmore">Read More</a>
                                     </div>
                                 </div>
@@ -172,19 +179,19 @@ $baglanti = null;
                               <div class="col-lg-4 col-md-6">
                                 <div class="s-single-services text-center mb-30 wow fadeInUp  animated" data-animation="fadeInUp" data-delay=".6s">
                                     <div class="services-icon mb-30">
-                                      <img src="img/icon/se-icon3.png" alt="img">
+                                      <img src="<?php echo $hizmet[2]["ikon"]; ?>" alt="img">
                                     </div>
                                     <div class="second-services-content">
-                                       <h3><a href="single-service.html">Game Development</a></h3>
-                                        <p>I research & create breakthrough delightful ideas leading.</p>
+                                       <h3><a href="single-service.html"><?php echo $hizmet[2]["baslik"]; ?></a></h3>
+                                        <p><?php echo $hizmet[2]["icerik"]; ?></p>
                                         <a href="single-service.html" class="readmore">Read More</a>
                                     </div>
                                 </div>
                             </div>                       
                         </div>
-					
-                     
-                    </div>
+                                                    
+                    </div> 
+                </div>
             </section>
            <!-- services-three-area -->
               <!-- gallery-area -->
