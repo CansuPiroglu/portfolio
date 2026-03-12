@@ -16,8 +16,13 @@ try {
    
     $hizmet_sorgu = $baglanti->query("SELECT * FROM services");
     $hizmet = $hizmet_sorgu->fetchAll(PDO::FETCH_ASSOC);
-    
 
+    $portfolyo_sorgu = $baglanti->query("SELECT * FROM recent_works");
+    $portfolyo = $portfolyo_sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+    $yorum_sorgu = $baglanti->query("SELECT * FROM comments");
+    $yorum = $yorum_sorgu->fetchAll(PDO::FETCH_ASSOC);
+    
 
     #echo "Adı: " . $cikti["name"] . "<br /> Soyadı: " . $cikti["surname"] . "<br /> E-posta: " . $cikti["email"] . "<br /> Deneyim: " . $cikti["experience_year"] ." Yıl";
 
@@ -83,10 +88,7 @@ $baglanti = null;
                                             <li class="has-sub"><a href="#">Other Pages</a>
 												<ul>
                                                     <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog-details.html">Blog Deatils </a></li>
-                                                    <li><a href="projects-details.html">Protfolio Deatils</a></li>
                                                     <li><a href="#testimonial">Testimonial</a></li>
-                                                    <li><a href="#awards">Awards</a></li>
                                                   </ul>
 											</li>
                                             <li><a href="#contact">Contact</a></li>                                                  
@@ -128,7 +130,7 @@ $baglanti = null;
                                     <div class="slider-content s-slider-content mt-100 p-relative">
                                         <h5 data-animation="fadeInUp" data-delay=".3s"><span><img src="img/bg/cube.png" alt="icon01"></span> <?php echo $cikti["title"]; ?></h5>
                                          <h2 data-animation="fadeInUp" data-delay=".6s">Selam Ben <br><?php echo $cikti["name"]; ?></h2>
-                                          <div class="slider-btn mb-105">     
+                                          <div class="slider-btn mb-150">     
                                             <a href="#contact" class="btn ss-btn mr-15" data-animation="fadeInUp" data-delay=".9s">Download CV </a>
                                         </div>        
                                                               
@@ -160,7 +162,7 @@ $baglanti = null;
                                     <div class="second-services-content">
                                         <h3><a href="single-service.html"><?php echo $hizmet[0]["baslik"]; ?></a></h3>
                                         <p><?php echo $hizmet[0]["icerik"]; ?></p>
-                                        <a href="single-service.html" class="readmore">Read More</a>
+                                        <a href="#" class="readmore">Read More</a>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +174,7 @@ $baglanti = null;
                                     <div class="second-services-content">
                                        <h3><a href="single-service.html"><?php echo $hizmet[1]["baslik"]; ?></a></h3>
                                         <p><?php echo $hizmet[1]["icerik"]; ?></p>
-                                        <a href="single-service.html" class="readmore">Read More</a>
+                                        <a href="#" class="readmore">Read More</a>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +186,7 @@ $baglanti = null;
                                     <div class="second-services-content">
                                        <h3><a href="single-service.html"><?php echo $hizmet[2]["baslik"]; ?></a></h3>
                                         <p><?php echo $hizmet[2]["icerik"]; ?></p>
-                                        <a href="single-service.html" class="readmore">Read More</a>
+                                        <a href="#" class="readmore">Read More</a>
                                     </div>
                                 </div>
                             </div>                       
@@ -205,7 +207,6 @@ $baglanti = null;
                                 <h2>
                                     Recent Works
                                 </h2>
-                                <p>Above creature the rule blessed brought. Multiply they're one. Gathering own waters beast blessed.</p>
                             </div>
                             </div>
                             <div class="col-lg-6 col-md-6 text-right">
@@ -213,73 +214,22 @@ $baglanti = null;
                             </div>
                         </div>
                         <div class="home-blog-active wow fadeInUp  animated" data-animation="fadeInUp" data-delay=".4s">
-                            <div class="grid-item financial">
-                                <a href="projects-details.html">
-                                <figure class="gallery-image">                            
-                                  <img src="img/gallery/protfolio-img01.jpg" alt="img" class="img"> 
-                                     <figcaption>
-                                        <span>Design, App</span>
-                                        <h4>Helix iOs App Design</h4>
-                                    </figcaption>
-                                </figure>
-                              </a>
-                            </div>
-                            <div class="grid-item financial banking">
-                               <a href="projects-details.html">
-                                    <figure class="gallery-image">                            
-                                     <img src="img/gallery/protfolio-img02.jpg" alt="img" class="img">      
-                                      <figcaption>
-                                        <span>Website, Dashboard</span>
-                                        <h4>Jikson Big Dashboard</h4>
-                                    </figcaption>
-                                    </figure>
-                                  </a>
-                            </div>
-                             <div class="grid-item insurance">
-                                   <a href="projects-details.html">
-                                    <figure class="gallery-image">                               
-                                       <img src="img/gallery/protfolio-img03.jpg" alt="img" class="img">      
-                                         <figcaption>
-                                          <span>UI, UX, iOs</span>
-                                        <h4>Maono UX Service</h4>
+                            <?php foreach($portfolyo as $p): ?>
+    
+                            <div class="grid-item <?php echo $p['sinif']; ?>">
+                                <a href="<?php echo $p['link']; ?>">
+                                    <figure class="gallery-image">
+                                        <img src="<?php echo $p['resim']; ?>" alt="img" class="img">
+                                        <figcaption>
+                                            <span><?php echo $p['kategori']; ?></span>
+                                            <h4><?php echo $p['baslik']; ?></h4>
                                         </figcaption>
                                     </figure>
-                                  </a>
+                                </a>
                             </div>
-                             <div class="grid-item financial">
-                                <a href="projects-details.html">
-                                <figure class="gallery-image">                            
-                                  <img src="img/gallery/protfolio-img01.jpg" alt="img" class="img"> 
-                                     <figcaption>
-                                        <span>Design, App</span>
-                                        <h4>Helix iOs App Design</h4>
-                                    </figcaption>
-                                </figure>
-                              </a>
-                            </div>
-                            <div class="grid-item financial banking">
-                                <a href="projects-details.html">
-                                    <figure class="gallery-image">                            
-                                     <img src="img/gallery/protfolio-img02.jpg" alt="img" class="img">      
-                                      <figcaption>
-                                        <span>Website, Dashboard</span>
-                                        <h4>Jikson Big Dashboard</h4>
-                                    </figcaption>
-                                    </figure>
-                                  </a>
-                            </div>
-                             <div class="grid-item insurance">
-                                    <a href="projects-details.html">
-                                    <figure class="gallery-image">                               
-                                       <img src="img/gallery/protfolio-img03.jpg" alt="img" class="img">      
-                                         <figcaption>
-                                          <span>UI, UX, iOs</span>
-                                        <h4>Maono UX Service</h4>
-                                        </figcaption>
-                                    </figure>
-                                  </a>
-                            </div>
-                      </div>
+
+                            <?php endforeach; ?>                      
+                        </div>
                     </div>
                 </div>
             </section>
@@ -293,7 +243,7 @@ $baglanti = null;
                              <div class="single-counter wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
                                 <div class="counter p-relative">
                                      <div class="img-icon"><img src="img/bg/cube.png" alt="icon01"></div>                                      
-                                    <span class="count">120</span>                               
+                                    <span class="count">2</span>                               
                                     <p>Active Projects</p>
                                     <div class="number">01</div>
                                 </div>
@@ -304,7 +254,7 @@ $baglanti = null;
                             <div class="single-counter wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
                                 <div class="counter p-relative">
                                     <div class="img-icon"><img src="img/bg/cube.png" alt="icon01"></div>                                      
-                                    <span class="count">5</span>   <span>K</span>                          
+                                    <span class="count">6</span>                      
                                     <p>Project Already Done</p>
                                     <div class="number">02</div>
                                 </div>
@@ -315,7 +265,7 @@ $baglanti = null;
                             <div class="single-counter wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
                                   <div class="counter p-relative">
                                      <div class="img-icon"><img src="img/bg/cube.png" alt="icon01"></div>                                      
-                                    <span class="count">1</span>    <span>M</span>                                   
+                                    <span class="count">2</span>                                
                                     <p>Multi-Platform Followers</p>
                                       <div class="number">03</div>
                                 </div>
@@ -326,7 +276,7 @@ $baglanti = null;
                             <div class="single-counter wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
                                 <div class="counter p-relative">
                                     <div class="img-icon"><img src="img/bg/cube.png" alt="icon01"></div>                                      
-                                    <span class="count">100</span>                             
+                                    <span class="count">1</span>                             
                                     <p>Country Touched</p>
                                     <div class="number">04</div>
                                 </div>
@@ -338,105 +288,37 @@ $baglanti = null;
             <!-- counter-area-end -->	
              <!-- testimonial-area -->
             <section id="testimonial" class="testimonial-area pt-120 pb-115 p-relative fix">
-                  <div class="animations-01"><img src="img/bg/an-img-03.png" alt="an-img-01"></div>
-                <div class="animations-02"><img src="img/bg/an-img-04.png" alt="contact-bg-an-01"></div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-title text-center mb-35 wow fadeInDown animated" data-animation="fadeInDown" data-delay=".4s">
-                                <h5>client feedback</h5>
-                                <h2>
-                                Trusted By Clients
-                                </h2>
+                <div class="animations-01"><img src="img/bg/an-img-03.png" alt="an-img-01"></div>
+                    <div class="animations-02"><img src="img/bg/an-img-04.png" alt="contact-bg-an-01"></div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="section-title text-center mb-35 wow fadeInDown animated" data-animation="fadeInDown" data-delay=".4s">
+                                        <h5>client feedback</h5>
+                                        <h2>
+                                        Trusted By Clients
+                                        </h2>
                              
-                            </div>
+                                    </div>
                            
-                        </div>
+                                </div>
                         
-                        <div class="col-lg-12">
-                            <div class="testimonial-active wow fadeInUp animated" data-animation="fadeInUp" data-delay=".4s">
-                                <div class="single-testimonial text-center">
-                                    <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar.png" alt="img">
+                                <div class="col-lg-12">
+                                    <div class="testimonial-active wow fadeInUp animated" data-animation="fadeInUp" data-delay=".4s">
+                            
+                                        <?php foreach($yorum as $y): ?>
+                                        <div class="single-testimonial text-center">
+                                            <div class="testi-author">
+                                            <img src="<?php echo $y['foto']; ?>" alt="img">
+                                            </div>
+                                                <p>" <?php echo $y['yorum']; ?> "</p>
+                                            <div class="ta-info">
+                                            <h6><?php echo $y['ad_soyad']; ?></h6>
+                                            <span><?php echo $y['unvan']; ?></span>
+                                        </div>
                                     </div>
-                                    <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>
-                                    <div class="ta-info">
-                                            <h6>Miranda H. Halimson</h6>
-                                            <span>Founder Of Miranda Ltd.</span>
-                                        </div>                                    
-                                </div>
-                                <div class="single-testimonial text-center">
-                                     <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar_02.png" alt="img">
+                                        <?php endforeach; ?>
                                     </div>
-                                    <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>
-                                    <div class="ta-info">
-                                            <h6>Rosalina D. William</h6>
-                                            <span>CEO Of Rosalia Co.</span>
-                                        </div>                                    
-                                </div>
-                              <div class="single-testimonial text-center">
-                                     <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar_03.png" alt="img">
-                                    </div>
-                                   <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>
-                                   
-                                    <div class="ta-info">
-                                            <h6>Alexis A. Alvon</h6>
-                                            <span>CEO Of Alvon Co</span>
-                                        </div>                                    
-                                </div>
-                                <div class="single-testimonial text-center">
-                                    <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar.png" alt="img">
-                                    </div>
-                                     <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>
-                                    
-                                    <div class="ta-info">
-                                            <h6>Margie Dose</h6>
-                                            <span>Web Developer</span>
-                                        </div>                                    
-                                </div>
-                               <div class="single-testimonial text-center">
-                                   <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar_02.png" alt="img">
-                                    </div>
-                                     <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>                                    
-                                    <div class="ta-info">
-                                            <h6>Rock Dloder</h6>
-                                            <span>Web Developer</span>
-                                        </div>                                    
-                                </div>
-                                <div class="single-testimonial text-center">
-                                    <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar.png" alt="img">
-                                    </div>
-                                    <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>
-                                    <div class="ta-info">
-                                            <h6>Miranda H. Halimson</h6>
-                                            <span>Founder Of Miranda Ltd.</span>
-                                        </div>                                    
-                                </div>
-                                <div class="single-testimonial text-center">
-                                     <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar_02.png" alt="img">
-                                    </div>
-                                    <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>
-                                    <div class="ta-info">
-                                            <h6>Rosalina D. William</h6>
-                                            <span>CEO Of Rosalia Co.</span>
-                                        </div>                                    
-                                </div>
-                              <div class="single-testimonial text-center">
-                                     <div class="testi-author">
-                                        <img src="img/testimonial/testi_avatar_03.png" alt="img">
-                                    </div>
-                                   <p>“ I’d love to meet up with you to discuss your venture & collaboration. ”</p>
-                                   
-                                    <div class="ta-info">
-                                            <h6>Alexis A. Alvon</h6>
-                                            <span>CEO Of Alvon Co</span>
-                                        </div>                                    
                                 </div>
                             </div>
                         </div>
@@ -452,7 +334,7 @@ $baglanti = null;
                             <div class="section-title text-center mb-50 wow fadeInDown animated" data-animation="fadeInDown" data-delay=".4s">
                                  <h5><img src="img/brand/clinet-logo.png" alt="img"></h5>
                                 <h2>
-                                    1M Happy Users Around From World
+                                    2 Happy Users Around From World
                                 </h2>
 
                             </div>
@@ -488,223 +370,14 @@ $baglanti = null;
                     </div>
                      <div class="row brand-text">
                           <div class="col-lg-12">
-                              Be Our Next Client. <a href="#">Get In Touch</a>
+                              Be Our Next Client. <a href="#contact">Get In Touch</a>
                          </div>
                     </div>
                 </div>
             </section>
             <!-- brand-area-end -->
-              <!-- video-area -->
-            <section id="video" class="video-area pt-120 pb-120 p-relative fix">
-                 <div class="animations-01"><img src="img/bg/an-img-05.png" alt="an-img-01"></div>
-               
-                <div class="container">                
-                    
-                      <div class="row  home-blog-active2">      
-                          <div class="col-lg-12">
-                            <div class="row justify-content-center align-items-center">
-                               <div class="col-lg-6">
-                            <div class="video-content wow fadeInRight  animated" data-animation="fadeInRight" data-delay=".4s">
-                                <div class="section-title pb-25">  
-                                    <h5><span><img src="img/bg/cube.png" alt="icon01"></span> read story</h5>
-                                    <h2>Logo, Identity & Website    For Boomerang LLC.</h2>                                   
-                                </div>
-                                   <p>“ I use animation as a third dimension by which to simplify experiences and kuiding thro each and every interaction. I’m not adding motion just to spruce. ”</p>
-                                    <div class="row justify-content-center align-items-center">
-                                        <div class="col-lg-6">
-                                            <div class="about-user">
-                                                <div class="img"><img src="img/features/user-about.png" alt="img"></div>
-                                                <div class="text">
-                                                    <span>Head Of Idea</span>
-                                                    <h5>Miranda H. Halim</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 text-right">
-                                            <img src="img/features/user-logo.png" alt="img">
-                                        </div>
-                                    </div>
-                                <div class="row justify-content-center align-items-center mt-30 bdr">
-                                        <div class="col-lg-8 pt-30">
-                                            <div class="rised">
-                                                <ul>
-                                                    <li><span>ROI Reached</span><h3>80%</h3></li>
-                                                    <li><span>Rised</span><h3>$500k</h3></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 text-right pt-30">
-                                             <a href="#skill" class="btn ss-btn smoth-scroll">Get Started <i class="fal fa-long-arrow-right"></i></a>			
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                          <div class="col-lg-6">
-                            <div class="s-video-wrap pl-60">
-                                <div class="video-img">
-                                     <img src="img/bg/vedio-img2.png" alt="img">
-                                </div>
-                                <div class="s-video-content">
-                                    <a href="https://www.youtube.com/watch?v=7e90gBu4pas" class="popup-video mb-50"><img src="img/bg/play-button.png" alt="circle_right"></a>
-                                   
-                                </div>
-                            </div>
-                            
-                        </div>
-                              
-                            </div>
-                          </div>
-                        <div class="col-lg-12">
-                           <div class="row justify-content-center align-items-center">
-                               <div class="col-lg-6">
-                            <div class="video-content wow fadeInRight  animated" data-animation="fadeInRight" data-delay=".4s">
-                                <div class="section-title pb-25">  
-                                    <h5><span><img src="img/bg/cube.png" alt="icon01"></span> read story</h5>
-                                    <h2>Logo, Identity & Website    For Boomerang LLC.</h2>                                   
-                                </div>
-                                   <p>“ I use animation as a third dimension by which to simplify experiences and kuiding thro each and every interaction. I’m not adding motion just to spruce. ”</p>
-                                    <div class="row justify-content-center align-items-center">
-                                        <div class="col-lg-6">
-                                            <div class="about-user">
-                                                <div class="img"><img src="img/features/user-about.png" alt="img"></div>
-                                                <div class="text">
-                                                    <span>Head Of Idea</span>
-                                                    <h5>Miranda H. Halim</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 text-right">
-                                            <img src="img/features/user-logo.png" alt="img">
-                                        </div>
-                                    </div>
-                                <div class="row justify-content-center align-items-center mt-30 bdr">
-                                        <div class="col-lg-8 pt-30">
-                                            <div class="rised">
-                                                <ul>
-                                                    <li><span>ROI Reached</span><h3>80%</h3></li>
-                                                    <li><span>Rised</span><h3>$500k</h3></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 text-right pt-30">
-                                             <a href="#skill" class="btn ss-btn smoth-scroll">Get Started <i class="fal fa-long-arrow-right"></i></a>			
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                          <div class="col-lg-6">
-                            <div class="s-video-wrap pl-60">
-                                <div class="video-img">
-                                     <img src="img/bg/vedio-img.png" alt="img">
-                                </div>
-                                <div class="s-video-content">
-                                    <a href="https://www.youtube.com/watch?v=7e90gBu4pas" class="popup-video mb-50"><img src="img/bg/play-button.png" alt="circle_right"></a>
-                                   
-                                </div>
-                            </div>
-                            
-                        </div>
-                              
-                            </div>
-                          </div>
-                    </div>
-                </div>
-            </section>
-            <!-- video-area-end -->
-            <!-- awards-area -->
-            <section id="awards" class="awards-area after-none contact-bg pt-120 pb-120 p-relative fix" style="background: #f1f4f6;">
-                  <div class="animations-03"><img src="img/bg/an-img-06.png" alt="an-img-01"></div>
-                <div class="animations-02"><img src="img/bg/an-img-07.png" alt="contact-bg-an-01"></div>
-                <div class="container">
-             
-					<div class="row">
-						
-                         <div class="col-lg-12">
-                            <div class="section-title text-center mb-50 wow fadeInDown animated" data-animation="fadeInDown" data-delay=".4s">
-                                <h5>awards</h5>
-                                <h2>
-                                    Get Rewards
-                                </h2>
-                             
-                            </div>
-                           
-                        </div>
-                        <div class="col-lg-12">
-                            <div class='awards-box p-relative hover-zoomin'>
-                               <div class="row justify-content-center align-items-center">
-                                    <div class="col-lg-9">
-                                        <span>Best Designer Award</span>
-                                        <h3>Visualisation & Conceptual Art </h3>   
-                                    </div>
-                                    <div class="col-lg-3 text-right">
-                                       <span class="sine">2022</span> 
-                                    </div>
-                                </div>
-                                
-                               <div class="layer img-hover" data-depth="0.10"><img src="img/bg/awads-img01.png" alt="shape"></div>
-                           </div>
-                             <div class='awards-box p-relative hover-zoomin'>
-                               <div class="row justify-content-center align-items-center">
-                                    <div class="col-lg-9">
-                                        <span>ADM Awards</span>
-                                        <h3>Pantone H&D Saatchi Group AWG</h3>   
-                                    </div>
-                                    <div class="col-lg-3 text-right">
-                                       <span class="sine">2023</span> 
-                                    </div>
-                                </div>
-                                
-                               <div class="layer img-hover" data-depth="0.10"><img src="img/bg/awads-img02.png" alt="shape"></div>
-                           </div>
-                             <div class='awards-box p-relative hover-zoomin'>
-                               <div class="row justify-content-center align-items-center">
-                                    <div class="col-lg-9">
-                                        <span>CSS Design Awards</span>
-                                        <h3>The Journey of One Project</h3>   
-                                    </div>
-                                    <div class="col-lg-3 text-right">
-                                       <span class="sine">2020</span> 
-                                    </div>
-                                </div>
-                                
-                               <div class="layer img-hover" data-depth="0.10"><img src="img/bg/awads-img03.png" alt="shape"></div>
-                           </div>
-                             <div class='awards-box p-relative hover-zoomin'>
-                               <div class="row justify-content-center align-items-center">
-                                    <div class="col-lg-9">
-                                        <span>Infinity Designer Award</span>
-                                        <h3>Festival of Digital Culture 2020 </h3>   
-                                    </div>
-                                    <div class="col-lg-3 text-right">
-                                       <span class="sine">2020</span> 
-                                    </div>
-                                </div>
-                                
-                               <div class="layer img-hover" data-depth="0.10"><img src="img/bg/awads-img04.png" alt="shape"></div>
-                           </div>
-                            
-                        </div>
-					</div>
-                    
-                </div>
-               
-            </section>
-            <!-- awards-area-end -->
-           <!-- video-area -->
-            <section class="cta-area cta-bg pt-160" style="background-image:url(img/bg/cta_bg.png)">
-                <div class="container">
-                    <div class="row justify-content-center text-center align-items-center">
-					   <div class="col-lg-12">
-                              <a href="https://www.youtube.com/watch?v=gyGsPlt06bo" class="popup-video mb-50"><img src="img/bg/play-button.png" alt="circle_right"></a>
-                               
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- video-area-end -->	
             <!-- contact-area -->
             <section id="contact" class="contact-area after-none contact-bg pb-120 p-relative fix">
-                  <div class="animations-01"><img src="img/bg/an-img-08.png" alt="an-img-01"></div>
                 <div class="container">
              
 					<div class="row">
@@ -715,15 +388,19 @@ $baglanti = null;
                                 <h2>
                                  Feel Free To Ask Anything
                                 </h2>
-                                <p>Above creature the rule blessed brought. Multiply they're one. Gathering own waters beast blessed.</p>
+                                <p>Benimle iletişime geçmekten çekinme, en kısa sürede dönüş yapacağım.</p>
                             </div>
                              
                             <div class="contact-info pl-60">
-                                  <div class="single-cta pb-30 mb-30 wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
-                                     <p>251 Purple Sunset Avenue Brooklyn, BXY 92101 mewsi@example.com</p>
+                                  <div class="single-cta pb-40 mb-40 wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
+                                    <p>Ümraniye Caddesi No:42
+                                        Ümraniye, İstanbul 34200
+                                        Türkiye
+                                        cansu@gmail.com
+                                    </p>
                                     </div>
-                                     <div class="single-cta pb-30 mb-30 wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
-                                        <p>251 Purple Sunset Avenue Brooklyn, BXY 92101 mewsi@example.com</p>
+                                     <div class="single-cta pb-20 mb-20 wow fadeInUp animated" data-animation="fadeInDown animated" data-delay=".2s">
+                                        
                                     </div>
                                   
                                 </div>	
@@ -745,23 +422,10 @@ $baglanti = null;
                                             <input type="text" id="email" name="email" placeholder="Eamil" required>
                                         </div>
                                     </div>		
-                                    <div class="col-lg-6">                               
+                                    <div class="col-lg-12">                               
                                         <div class="contact-field p-relative c-subject mb-20">          
                                             <i class="fas fa-book"></i>
                                             <input type="text" id="subject" name="subject" placeholder="Subject">
-                                        </div>
-                                    </div>	
-                                         <div class="col-lg-6">                               
-                                        <div class="contact-field p-relative c-option mb-20">                                   
-                                            <i class="fas fa-dollar-sign"></i>
-                                               <select name="room" id="rm">
-                                                  <option value="sports-massage"> Budget</option>
-                                                  <option value="1">$100</option>
-                                                    <option value="2">$200</option>
-                                                    <option value="3">$300</option>
-                                                    <option value="4">$400</option>
-                                                    <option value="5">$500</option>
-                                                </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -799,13 +463,12 @@ $baglanti = null;
                                  <div class="f-logo">
                                       <img src="img/logo/logo.png" alt="img">
                                 </div>
-                                <p>“ I use animation as a third dimension by which to simplify experiences and kuiding thro each and every interaction. I’m not adding motion just to spruce. ”</p>
+                                <p>“ Kod yazmak sadece bir araç, asıl gaye 
+                                kullanıcı deneyimi ve rahatlığını geliştirmek. ”</p>
                             </div>
                              <div class="footer-social mt-10 mb-120 wow fadeInDown  animated" data-animation="fadeInDown" data-delay=".4s"> 
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-youtube"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/in/cansu-piro%C4%9Flu-55030a25a/"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://github.com/CansuPiroglu"><i class="fab fa-github"></i></a>
                                 </div>    
                            
                         </div>
@@ -817,7 +480,7 @@ $baglanti = null;
                     <div class="row align-items-center">                       
                         <div class="col-lg-6">
                           <div class="copy-text">
-                                 Copyright © Zcube 2023 . All rights reserved.       
+                                 Copyright © Cansu Piroğlu 2026 . All rights reserved.       
                             </div>
                         </div>                       
                        <div class="col-lg-6 text-right text-xl-right">
