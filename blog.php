@@ -18,6 +18,9 @@ try {
     $sorgu2->bindParam(1, $sira1, PDO::PARAM_INT);
     $sorgu2->execute();
 
+    $tag_sorgu = $baglanti->query("SELECT * FROM subcategories");
+    $taglar = $tag_sorgu->fetchAll(PDO::FETCH_ASSOC);
+
     $cikti2 = $sorgu2->fetch(PDO::FETCH_ASSOC);
 
     #echo "Adı: " . $cikti1["name"] . "<br /> Soyadı: " . $cikti1["surname"] . "<br /> E-posta: " . $cikti1["email"] . "<br /> Deneyim: " . $cikti1["experience_year"] ." Yıl";
@@ -30,6 +33,7 @@ try {
                     posts.title,
                     posts.content,
                     posts.status,
+                    posts.resim,
                     posts.created_at,
                     subcategories.name AS alt_kategori,
                     categories.name AS ana_kategori
@@ -46,7 +50,7 @@ try {
 
             // Sidebar için son yazılar
             $son_yazilar_sorgu = $baglanti->query("
-                SELECT posts.id, posts.title, posts.created_at 
+                SELECT posts.id, posts.title, posts.created_at, posts.resim
                 FROM posts 
                 WHERE status = 'active' 
                 ORDER BY id DESC 
@@ -107,24 +111,20 @@ $baglanti = null;
                                     <nav id="mobile-menu">
                                         <ul>
                                              <li class="has-sub">
-                                                <a href="index.html#home">Home</a>
-                                                 
+                                                <a href="index.php#home">Home</a>
                                             </li>
-                                            <li><a href="#video">About me</a></li>
+                                            
                                             <li class="has-sub"> 
-                                              <a href="#services">Services</a>
+                                              <a href="index.php#services">Services</a>
                                             </li>
-                                            <li><a href="#portfolio">Portfolio</a></li>
+                                            <li><a href="index.php#portfolio">Portfolio</a></li>
                                             <li class="has-sub"><a href="#">Other Pages</a>
                                                 <ul>
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog-details.html">Blog Deatils </a></li>
-                                                    <li><a href="projects-details.html">Protfolio Deatils</a></li>
-                                                    <li><a href="#testimonial">Testimonial</a></li>
-                                                    <li><a href="#awards">Awards</a></li>
+                                                    <li><a href="blog.php">Blog</a></li>
+                                                    <li><a href="index.php#testimonial">Testimonial</a></li>
                                                   </ul>
                                             </li>
-                                            <li><a href="#contact">Contact</a></li>                                                  
+                                            <li><a href="index.php#contact">Contact</a></li>                                                  
                                         </ul>
                                     </nav>
                                 </div>
@@ -183,6 +183,9 @@ $baglanti = null;
                             
                             <?php foreach($yazilar as $yazi): ?>
                                 <div class="bsingle__post mb-50">
+                                    <div class="bsingle__post-thumb">
+                                        <img src="<?php echo $yazi['resim']; ?>" alt="img">
+                                    </div>
                                     <div class="bsingle__content">
                                         <div class="meta-info">
                                             <ul>
@@ -225,18 +228,6 @@ $baglanti = null;
                                     <input type="submit" class="search-submit" value="Search" />
                                  </form>
                               </section>
-                              <section id="custom_html-5" class="widget_text widget widget_custom_html">
-                                 <h2 class="widget-title">Follow Us</h2>
-                                 <div class="textwidget custom-html-widget">
-                                    <div class="widget-social">
-                                       <a href="#"><i class="fab fa-twitter"></i></a>
-                                       <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                       <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                       <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                       <a href="#"><i class="fab fa-wordpress"></i></a>
-                                    </div>
-                                 </div>
-                              </section>
 
                               <section id="categories-1" class="widget widget_categories">
                                 <h2 class="widget-title">Categories</h2>
@@ -260,17 +251,14 @@ $baglanti = null;
                               </section>
 
                               <section id="tag_cloud-1" class="widget widget_tag_cloud">
-                                 <h2 class="widget-title">Tag</h2>
-                                 <div class="tagcloud">
-                                     <a href="#" class="tag-cloud-link tag-link-28 tag-link-position-1" style="font-size: 8pt;" aria-label="app (1 item)">app</a>
-                                    <a href="#" class="tag-cloud-link tag-link-17 tag-link-position-2" style="font-size: 8pt;" aria-label="Branding (1 item)">Branding</a>
-                                    <a href="#" class="tag-cloud-link tag-link-20 tag-link-position-3" style="font-size: 8pt;" aria-label="corporat (1 item)">corporat</a>
-                                    <a href="#" class="tag-cloud-link tag-link-24 tag-link-position-4" style="font-size: 16.4pt;" aria-label="Design (2 items)">Design</a>
-                                    <a href="#" class="tag-cloud-link tag-link-25 tag-link-position-5" style="font-size: 22pt;" aria-label="gallery (3 items)">gallery</a>
-                                    <a href="#" class="tag-cloud-link tag-link-26 tag-link-position-6" style="font-size: 8pt;" aria-label="video (1 item)">video</a>
-                                    <a href="#" class="tag-cloud-link tag-link-29 tag-link-position-7" style="font-size: 16.4pt;" aria-label="web design (2 items)">web design</a>
-                                 </div>
+                                <h2 class="widget-title">Tag</h2>
+                                <div class="tagcloud">
+                                    <?php foreach($taglar as $tag): ?>
+                                    <a href="#" class="tag-cloud-link"><?php echo $tag['name']; ?></a>
+                                    <?php endforeach; ?>
+                                </div>
                               </section>
+
                            </aside>
                         </div>
                     </div>
@@ -291,14 +279,12 @@ $baglanti = null;
                                  <div class="f-logo">
                                       <img src="img/logo/logo.png" alt="img">
                                 </div>
-                                <p>“ I use animation as a third dimension by which to simplify experiences and kuiding thro each and every interaction. I’m not adding motion just to spruce. ”</p>
+                                <p>“ Teknoloji, tasarım ve yazılım üzerine düşüncelerimi paylaştığım köşem. ”</p>
                             </div>
                              <div class="footer-social mt-10 mb-120 wow fadeInDown  animated" data-animation="fadeInDown" data-delay=".4s"> 
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-youtube"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                </div>    
+                                    <a href="https://www.linkedin.com/in/cansu-piro%C4%9Flu-55030a25a/"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://github.com/CansuPiroglu"><i class="fab fa-github"></i></a>
+                                </div>     
                            
                         </div>
                     </div>                    
@@ -309,7 +295,7 @@ $baglanti = null;
                     <div class="row align-items-center">                       
                         <div class="col-lg-6">
                           <div class="copy-text">
-                                 Copyright © Zcube 2023 . All rights reserved.       
+                                 Copyright © Cansu Piroğlu 2026 . All rights reserved.       
                             </div>
                         </div>                       
                        <div class="col-lg-6 text-right text-xl-right">

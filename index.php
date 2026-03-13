@@ -77,17 +77,17 @@ $baglanti = null;
                                     <nav id="mobile-menu">
                                         <ul>
                                              <li class="has-sub">
-                                                <a href="index.html#home">Home</a>
+                                                <a href="index.php#home">Home</a>
                                                  
                                             </li>
-                                            <li><a href="#video">About me</a></li>
+                                            
                                             <li class="has-sub"> 
                                               <a href="#services">Services</a>
                                             </li>
                                             <li><a href="#portfolio">Portfolio</a></li>
                                             <li class="has-sub"><a href="#">Other Pages</a>
 												<ul>
-                                                    <li><a href="blog.html">Blog</a></li>
+                                                    <li><a href="blog.php">Blog</a></li>
                                                     <li><a href="#testimonial">Testimonial</a></li>
                                                   </ul>
 											</li>
