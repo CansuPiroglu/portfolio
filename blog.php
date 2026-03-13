@@ -22,6 +22,40 @@ try {
 
     #echo "Adı: " . $cikti1["name"] . "<br /> Soyadı: " . $cikti1["surname"] . "<br /> E-posta: " . $cikti1["email"] . "<br /> Deneyim: " . $cikti1["experience_year"] ." Yıl";
 
+
+                // Tüm yazıları kategori bilgileriyle birlikte çek
+            $sorgu = $baglanti->query("
+                SELECT 
+                    posts.id,
+                    posts.title,
+                    posts.content,
+                    posts.status,
+                    posts.created_at,
+                    subcategories.name AS alt_kategori,
+                    categories.name AS ana_kategori
+                FROM posts
+                INNER JOIN subcategories ON posts.subcategory_id = subcategories.id
+                INNER JOIN categories ON subcategories.category_id = categories.id
+                WHERE posts.status = 'active'
+            ");
+            $yazilar = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+            // Sidebar için kategoriler
+            $kategori_sorgu = $baglanti->query("SELECT * FROM categories");
+            $kategoriler = $kategori_sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+            // Sidebar için son yazılar
+            $son_yazilar_sorgu = $baglanti->query("
+                SELECT posts.id, posts.title, posts.created_at 
+                FROM posts 
+                WHERE status = 'active' 
+                ORDER BY id DESC 
+                LIMIT 5
+            ");
+            $son_yazilar = $son_yazilar_sorgu->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 } catch (PDOException $e) {
     die($e->getMessage());
 }
@@ -37,10 +71,10 @@ $baglanti = null;
         <title>Vfolio- Personal Portfolio HTML Template </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
         <!-- Place favicon.ico in the root directory -->
 
-		<!-- CSS here -->
+        <!-- CSS here -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/animate.min.css">
         <link rel="stylesheet" href="css/magnific-popup.css">
@@ -58,7 +92,7 @@ $baglanti = null;
         <div class="cursor js-cursor"></div>
          <!-- header -->
         <header class="header-area header-three">  
-			  <div id="header-sticky" class="menu-area">
+              <div id="header-sticky" class="menu-area">
                 <div class="container-fluid">
                     <div class="second-menu">
                         <div class="row align-items-center">
@@ -82,14 +116,14 @@ $baglanti = null;
                                             </li>
                                             <li><a href="#portfolio">Portfolio</a></li>
                                             <li class="has-sub"><a href="#">Other Pages</a>
-												<ul>
+                                                <ul>
                                                     <li><a href="blog.html">Blog</a></li>
                                                     <li><a href="blog-details.html">Blog Deatils </a></li>
                                                     <li><a href="projects-details.html">Protfolio Deatils</a></li>
                                                     <li><a href="#testimonial">Testimonial</a></li>
                                                     <li><a href="#awards">Awards</a></li>
                                                   </ul>
-											</li>
+                                            </li>
                                             <li><a href="#contact">Contact</a></li>                                                  
                                         </ul>
                                     </nav>
@@ -146,43 +180,24 @@ $baglanti = null;
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <div class="bsingle__post mb-50">
-                                <div class="bsingle__post-thumb">
-                                    <img src="<?php echo $cikti2["web_image"]; ?>" alt="">
-                                </div>
-                                <div class="bsingle__content">
-                                    <div class="meta-info">
-                                        <ul>
-                                            <li><i class="fal fa-user"></i>By <?php echo $cikti1["name"]; ?></li>
-                                            <li><i class="fal fa-calendar-alt"></i>  <?php echo $cikti1["tarih"]; ?></li>
-                                        </ul>
-                                    </div>
-                                    <h2><a href="blog-details.html"> </a><?php echo $cikti2["title"]; ?></h2>
-                                   <p><?php echo $cikti2["content"]; ?></p>
-                                    <div class="blog__btn">
-                                        <a href="#" class="btn">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bsingle__post mb-50">
-                                <div class="bsingle__post-thumb video-p">
-                                    <img src="<?php echo $cikti2["web_video_kapak"]; ?>" alt="">
-                                    <a href="<?php echo $cikti2["web_video"]; ?>" class="video-i popup-video"><i class="fas fa-play"></i></a>
-                                </div>
-                                <div class="bsingle__content">
-                                    <div class="meta-info">
-                                        <ul>
-                                            <li><i class="fal fa-user"></i>By <?php echo $cikti1["name"]; ?></li>
-                                            <li><i class="far fa-comments"></i>35 Comments</li>
-                                        </ul>
-                                    </div>
-                                    <h2><a href="blog-details.html"><?php echo $cikti2["title"]; ?></a></h2>
-                                    <p><?php echo $cikti2["content"]; ?></p>
-                                    <div class="blog__btn">
-                                        <a href="#" class="btn">Read More</a>
+                            
+                            <?php foreach($yazilar as $yazi): ?>
+                                <div class="bsingle__post mb-50">
+                                    <div class="bsingle__content">
+                                        <div class="meta-info">
+                                            <ul>
+                                                <li><i class="fal fa-user"></i>By Cansu</li>
+                                                <li><i class="fal fa-tag"></i><?php echo $yazi['ana_kategori']; ?> > <?php echo $yazi['alt_kategori']; ?></li>
+                                            </ul>
+                                        </div>
+                                        <h2><?php echo $yazi['title']; ?></h2>
+                                        <p><?php echo substr($yazi['content'], 0, 150); ?></p>
+                                        <div class="blog__btn">
+                                            <a href="#" class="btn">Read More</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
               
                             <div class="pagination-wrap mb-50">
                                 <nav>
@@ -222,32 +237,28 @@ $baglanti = null;
                                     </div>
                                  </div>
                               </section>
+
                               <section id="categories-1" class="widget widget_categories">
-                                 <h2 class="widget-title">Categories</h2>
-                                 <ul>
-                                    <li class="cat-item cat-item-16"><a href="#">Branding</a> (4)</li>
-                                    <li class="cat-item cat-item-23"><a href="#">Corporat</a> (3)</li>
-                                    <li class="cat-item cat-item-18"><a href="#">Design</a> (3)</li>
-                                    <li class="cat-item cat-item-22"><a href="#">Gallery</a> (3)</li>
-                                 </ul>
+                                <h2 class="widget-title">Categories</h2>
+                                <ul>
+                                    <?php foreach($kategoriler as $k): ?>
+                                    <li class="cat-item"><a href="#"><?php echo $k['name']; ?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
                               </section>
+
                               <section id="recent-posts-4" class="widget widget_recent_entries">
-                                 <h2 class="widget-title">Recent Posts</h2>
-                                 <ul>
+                                <h2 class="widget-title">Recent Posts</h2>
+                                <ul>
+                                    <?php foreach($son_yazilar as $s): ?>
                                     <li>
-                                       <a href="#">User Experience Psychology And Performance Smshing</a>
-                                       <span class="post-date">August 19, 2020</span>
+                                        <a href="#"><?php echo $s['title']; ?></a>
+                                        <span class="post-date"><?php echo date('d M Y', strtotime($s['created_at'])); ?></span>
                                     </li>
-                                    <li>
-                                       <a href="#">Monthly Web Development Up Cost Of JavaScript</a>
-                                       <span class="post-date">August 19, 2020</span>
-                                    </li>
-                                    <li>
-                                       <a href="#">There are many variation passages of like available.</a>
-                                       <span class="post-date">August 19, 2020</span>
-                                    </li>
-                                 </ul>
+                                    <?php endforeach; ?>
+                                </ul>
                               </section>
+
                               <section id="tag_cloud-1" class="widget widget_tag_cloud">
                                  <h2 class="widget-title">Tag</h2>
                                  <div class="tagcloud">
@@ -314,7 +325,7 @@ $baglanti = null;
         </footer>
         <!-- footer-end -->
 
-		<!-- JS here -->
+        <!-- JS here -->
         <script src="js/vendor/modernizr-3.5.0.min.js"></script>
         <script src="js/vendor/jquery-3.6.4.min.js"></script>
         <script src="js/popper.min.js"></script>
