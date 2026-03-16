@@ -1,29 +1,25 @@
 <?php
 
+include 'conn.php';
+
 $sira1 = 1;
 
-try {
+$sorgu1 = $baglanti->prepare("SELECT * FROM setting WHERE id = ?");
+$sorgu1->bindParam(1, $sira1, PDO::PARAM_INT);
+$sorgu1->execute();
 
-    $baglanti = new PDO("mysql:host=localhost;dbname=cansu", "root", "");
-    $baglanti->exec("SET NAMES utf8");
-    $baglanti->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$cikti1 = $sorgu1->fetch(PDO::FETCH_ASSOC);
 
-    $sorgu1 = $baglanti->prepare("SELECT * FROM setting WHERE id = ?");
-    $sorgu1->bindParam(1, $sira1, PDO::PARAM_INT);
-    $sorgu1->execute();
+$sorgu2 = $baglanti->prepare("SELECT * FROM posts WHERE id = ?");
+$sorgu2->bindParam(1, $sira1, PDO::PARAM_INT);
+$sorgu2->execute();
 
-    $cikti1 = $sorgu1->fetch(PDO::FETCH_ASSOC);
+$tag_sorgu = $baglanti->query("SELECT * FROM subcategories");
+$taglar = $tag_sorgu->fetchAll(PDO::FETCH_ASSOC);
 
-    $sorgu2 = $baglanti->prepare("SELECT * FROM posts WHERE id = ?");
-    $sorgu2->bindParam(1, $sira1, PDO::PARAM_INT);
-    $sorgu2->execute();
+$cikti2 = $sorgu2->fetch(PDO::FETCH_ASSOC);
 
-    $tag_sorgu = $baglanti->query("SELECT * FROM subcategories");
-    $taglar = $tag_sorgu->fetchAll(PDO::FETCH_ASSOC);
-
-    $cikti2 = $sorgu2->fetch(PDO::FETCH_ASSOC);
-
-    #echo "Adı: " . $cikti1["name"] . "<br /> Soyadı: " . $cikti1["surname"] . "<br /> E-posta: " . $cikti1["email"] . "<br /> Deneyim: " . $cikti1["experience_year"] ." Yıl";
+#echo "Adı: " . $cikti1["name"] . "<br /> Soyadı: " . $cikti1["surname"] . "<br /> E-posta: " . $cikti1["email"] . "<br /> Deneyim: " . $cikti1["experience_year"] ." Yıl";
 
 
                 // Tüm yazıları kategori bilgileriyle birlikte çek
@@ -57,14 +53,6 @@ try {
                 LIMIT 5
             ");
             $son_yazilar = $son_yazilar_sorgu->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-} catch (PDOException $e) {
-    die($e->getMessage());
-}
-
-$baglanti = null;
 
 ?>
 <!doctype html>
