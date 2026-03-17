@@ -13,34 +13,24 @@ if (isset($_POST['adi'], $_POST['soyadi'], $_POST['eposta'])) {
         die("<p>Lütfen geçerli bir e-posta adresin girin!</p>");
     }
 
-    try {
+    include 'conn.php';
 
-        $baglanti = new PDO("mysql:host=localhost;dbname=cansu", "root", "");
-        $baglanti->exec("SET NAMES utf8");
-        $baglanti->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sorgu = $baglanti->prepare("UPDATE setting SET name = ?, surname = ?, email = ? WHERE id = 1");
+    $sorgu->bindParam(1, $adi, PDO::PARAM_STR);
+    $sorgu->bindParam(2, $soyadi, PDO::PARAM_STR);
+    $sorgu->bindParam(3, $eposta, PDO::PARAM_STR);
 
-        $sorgu = $baglanti->prepare("UPDATE setting SET name = ?, surname = ?, email = ? WHERE id = 1");
-        $sorgu->bindParam(1, $adi, PDO::PARAM_STR);
-        $sorgu->bindParam(2, $soyadi, PDO::PARAM_STR);
-        $sorgu->bindParam(3, $eposta, PDO::PARAM_STR);
-
-        $sorgu1 = $baglanti->prepare("UPDATE setting SET name = ?, surname = ?, email = ? WHERE id = 2");
-        $sorgu1->bindParam(1, $adi, PDO::PARAM_STR);
-        $sorgu1->bindParam(2, $soyadi, PDO::PARAM_STR);
-        $sorgu1->bindParam(3, $eposta, PDO::PARAM_STR);
+    $sorgu1 = $baglanti->prepare("UPDATE setting SET name = ?, surname = ?, email = ? WHERE id = 2");
+    $sorgu1->bindParam(1, $adi, PDO::PARAM_STR);
+    $sorgu1->bindParam(2, $soyadi, PDO::PARAM_STR);
+    $sorgu1->bindParam(3, $eposta, PDO::PARAM_STR);
 
 echo $adi;
-        $sorgu->execute();
+    $sorgu->execute();
 
-        $sorgu1->execute();
+    $sorgu1->execute();
 
-        echo "<p>Bilgiler başarılı bir şekilde kaydedildi.</p>";
-
-    } catch (PDOException $e) {
-        die($e->getMessage());
-    }
-
-    $baglanti = null;
+    echo "<p>Bilgiler başarılı bir şekilde kaydedildi.</p>";
 }
 
 ?>

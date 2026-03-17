@@ -1,37 +1,26 @@
 <?php
 
+include 'conn.php';
+
 $sira = 1;
 
-try {
+$sorgu = $baglanti->prepare("SELECT * FROM setting WHERE id = ?");
+$sorgu->bindParam(1, $sira, PDO::PARAM_INT);
+$sorgu->execute();
 
-    $baglanti = new PDO("mysql:host=localhost;dbname=cansu", "root", "");
-    $baglanti->exec("SET NAMES utf8");
-    $baglanti->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sorgu = $baglanti->prepare("SELECT * FROM setting WHERE id = ?");
-    $sorgu->bindParam(1, $sira, PDO::PARAM_INT);
-    $sorgu->execute();
-
-    $cikti = $sorgu->fetch(PDO::FETCH_ASSOC);
+$cikti = $sorgu->fetch(PDO::FETCH_ASSOC);
    
-    $hizmet_sorgu = $baglanti->query("SELECT * FROM services");
-    $hizmet = $hizmet_sorgu->fetchAll(PDO::FETCH_ASSOC);
+$hizmet_sorgu = $baglanti->query("SELECT * FROM services");
+$hizmet = $hizmet_sorgu->fetchAll(PDO::FETCH_ASSOC);
 
-    $portfolyo_sorgu = $baglanti->query("SELECT * FROM recent_works");
-    $portfolyo = $portfolyo_sorgu->fetchAll(PDO::FETCH_ASSOC);
+$portfolyo_sorgu = $baglanti->query("SELECT * FROM recent_works");
+$portfolyo = $portfolyo_sorgu->fetchAll(PDO::FETCH_ASSOC);
 
-    $yorum_sorgu = $baglanti->query("SELECT * FROM comments");
-    $yorum = $yorum_sorgu->fetchAll(PDO::FETCH_ASSOC);
+$yorum_sorgu = $baglanti->query("SELECT * FROM comments");
+$yorum = $yorum_sorgu->fetchAll(PDO::FETCH_ASSOC);
     
 
-    #echo "Adı: " . $cikti["name"] . "<br /> Soyadı: " . $cikti["surname"] . "<br /> E-posta: " . $cikti["email"] . "<br /> Deneyim: " . $cikti["experience_year"] ." Yıl";
-
-
-} catch (PDOException $e) {
-    die($e->getMessage());
-}
-
-$baglanti = null;
+#echo "Adı: " . $cikti["name"] . "<br /> Soyadı: " . $cikti["surname"] . "<br /> E-posta: " . $cikti["email"] . "<br /> Deneyim: " . $cikti["experience_year"] ." Yıl";
 
 ?>
 <!doctype html>
