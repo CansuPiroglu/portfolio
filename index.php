@@ -28,10 +28,10 @@ $yorum = $yorum_sorgu->fetchAll(PDO::FETCH_ASSOC);
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Vfolio- Personal Portfolio HTML Template </title>
+        <title>Cansu Piroğlu Portfolio</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="img/an-img-03.ico">
         <!-- Place favicon.ico in the root directory -->
 
 		<!-- CSS here -->
@@ -57,7 +57,7 @@ $yorum = $yorum_sorgu->fetchAll(PDO::FETCH_ASSOC);
                         <div class="row align-items-center">
                         <div class="col-lg-1 col-md-12">
                             <div class="logo">
-                                <a href="index.html"><img src="img/logo/logo.png" alt="logo"></a>
+                                <a href="index.php"><img src="img/logo/an-img-08.png" alt="logo"></a>
                             </div>
                         </div>
                            <div class="col-xl-8 col-lg-8 text-center">
@@ -450,7 +450,7 @@ $yorum = $yorum_sorgu->fetchAll(PDO::FETCH_ASSOC);
                         <div class="col-xl-6 col-lg-6 col-sm-12 text-center">
                                <div class="section-title p-relative mb-50 wow fadeInUp  animated" data-animation="fadeInUp" data-delay=".4s">
                                  <div class="f-logo">
-                                      <img src="img/logo/logo.png" alt="img">
+                                      <img src="img/logo/an-img-08.png" alt="img">
                                 </div>
                                 <p>“ Kod yazmak sadece bir araç, asıl gaye 
                                 kullanıcı deneyimi ve rahatlığını geliştirmek. ”</p>

@@ -157,7 +157,7 @@ CREATE TABLE `setting` (
   `phone` varchar(255) DEFAULT NULL,
   `experience_year` int(10) DEFAULT NULL,
   `birth` date DEFAULT NULL,
-  `tarih` date DEFAULT curdate(),
+  `tarih` date,
   `profile_image` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
